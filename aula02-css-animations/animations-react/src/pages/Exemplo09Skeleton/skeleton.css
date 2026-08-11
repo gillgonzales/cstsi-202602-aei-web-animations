@@ -1,0 +1,36 @@
+.skeleton {
+    background-image: linear-gradient(66deg, lightgrey, white, grey);
+    background-size: 600%;
+    background-repeat: no-repeat;
+    background-position: 0px 0px;
+    border-radius: 30px;
+    animation: skeletonCSSLoder 1s ease-in infinite;
+    margin-bottom: 10px;
+
+    & div {
+        width: 200px;
+        height: 200px;
+    }
+
+    & h1 {
+        width: 500px;
+        height: 50px;
+        font-size: 12px;
+        color: lightgray;
+        text-align: center;
+        align-content: center;
+    }
+
+}
+
+@keyframes skeletonCSSLoder {
+
+    0%,
+    100% {
+        background-position: 0px 0px;
+    }
+
+    50% {
+        background-position: -600px 0px;
+    }
+}
