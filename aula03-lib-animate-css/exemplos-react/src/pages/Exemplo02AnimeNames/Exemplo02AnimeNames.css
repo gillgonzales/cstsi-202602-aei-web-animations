@@ -1,0 +1,28 @@
+
+ div.container_ex02 {
+     width: 50%;
+     height: 20%;
+     border-radius: 10% 10%;
+     background-image: url('../../assets/img/animatecss-opengraph.jpg');
+     background-size: 100% 100%;
+     opacity: 1;
+     /* visibility: hidden; */
+
+     /*---configurando opções de animação----*/
+     animation-duration: 3s;
+     animation-timing-function: ease-in-out;
+     animation-iteration-count: infinite;
+     /*alterando repetições*/
+     animation-delay: 1s;
+     animation-fill-mode: forwards;
+     animation-direction: alternate;
+     animation-play-state: running;
+     /*---fim configuração----*/
+     animation-name: slideInDown;
+     /*utilizando @keyframes da animate.css*/
+ }
+
+ div.container_ex02:hover {
+     animation-play-state: running;
+     /* visibility: visible; */
+ }
