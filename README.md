@@ -10,7 +10,7 @@ Durante as aulas, os estudantes exploram desde conceitos básicos de transição
 
 ## 👨‍🏫 Autor
 
-Prof. Gonzales  
+Prof. Gill Gonzales  
 E-mail: gillgonzales@ifsul.edu.br
 
 ## 🧭 Visão geral
