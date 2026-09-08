@@ -24,7 +24,7 @@ const Exemplo03SliderImagem = ({ totalSlides }) => {
         ease: "outElastic(1,.3)",
     })
 
-    const nextSlide = ()=>{
+    const nextSlide = () => {
         scope.current.methods.nextSlide()
     }
 
@@ -74,14 +74,11 @@ const Exemplo03SliderImagem = ({ totalSlides }) => {
                         <Slider ref={root}>
                             <SliderList>
                                 {ArrayTotalSlides.map((_, indexSlide) => (
-                                    <li key={indexSlide + 1}
-                                        style={{
-                                            display: activeItemIndex === indexSlide ? 'block' : 'none'
-                                        }}>
+                                    <SliderItem key={indexSlide + 1} $isActive={activeItemIndex === indexSlide}>
                                         <SliderElement >
                                             <img src={`/assets/img/wallpapers/wallpaper0${indexSlide + 1}.jpg`} alt={`Slider ${indexSlide + 1}`} />
                                         </SliderElement>
-                                    </li>
+                                    </SliderItem>
                                 ))
                                 }
                             </SliderList>
