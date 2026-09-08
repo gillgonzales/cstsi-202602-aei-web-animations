@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
-import { animate } from 'animejs';
+import { animate, utils } from 'animejs';
 import { ContainerExamples } from '../../styles/ContainerExamples.styeld';
 
 const Exemplo01Intro = () => {
 
   useEffect(() => {
-    animate('#circle', { 		//alvo da animação, pode ser mais de um
+    const el = utils.$('#circle')
+    animate(el, { 		//alvo da animação, pode ser mais de um
       translateX: 100,			//propriedade a ser modificada (camelCase)
       backgroundColor: '#0f0',	//propriedade css em camelCase
       borderRadius: '0%',			//propriedade css em camelCase
