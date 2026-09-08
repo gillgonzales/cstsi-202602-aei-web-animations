@@ -9,11 +9,10 @@ const Exemplo02SeletorUtils = () => {
     const scope = useRef(null);
 
     useEffect(() => {
-
         scope.current = createScope({ root: animeContainer }).add(scope =>{
             //Animação 2.1
             const $svgTarget = utils.$('#sgv-geometry path');
-            //console.log($svgTarget);
+            console.log($svgTarget);
 
             const anime2 = animate(
                 $svgTarget, //alvo da animação (elemento svg)
