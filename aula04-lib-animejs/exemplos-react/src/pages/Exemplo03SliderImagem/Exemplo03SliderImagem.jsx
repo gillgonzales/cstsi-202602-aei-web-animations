@@ -7,9 +7,6 @@ const Exemplo03SliderImagem = ({ totalSlides }) => {
 
     const [activeItemIndex, setActiveItemIndex] = useState(2)
 
-    const ArrayTotalSlides = Array.from({ length: totalSlides });
-    // console.log(ArrayTotalSlides)
-
     const root = useRef(null)
     const scope = useRef(null)
 
@@ -73,13 +70,15 @@ const Exemplo03SliderImagem = ({ totalSlides }) => {
                         </div>
                         <Slider ref={root}>
                             <SliderList>
-                                {ArrayTotalSlides.map((_, indexSlide) => (
-                                    <SliderItem key={indexSlide + 1} $isActive={activeItemIndex === indexSlide}>
-                                        <SliderElement >
-                                            <img src={`/assets/img/wallpapers/wallpaper0${indexSlide + 1}.jpg`} alt={`Slider ${indexSlide + 1}`} />
-                                        </SliderElement>
-                                    </SliderItem>
-                                ))
+                                {
+                                    Array.from({ length: totalSlides })//cria uma estrutura em array do tamanho do totalSlides
+                                        .map((_, indexSlide) => (
+                                            <SliderItem key={indexSlide + 1} $isActive={activeItemIndex === indexSlide}>
+                                                <SliderElement >
+                                                    <img src={`/assets/img/wallpapers/wallpaper0${indexSlide + 1}.jpg`} alt={`Slider ${indexSlide + 1}`} />
+                                                </SliderElement>
+                                            </SliderItem>
+                                        ))
                                 }
                             </SliderList>
                         </Slider>
