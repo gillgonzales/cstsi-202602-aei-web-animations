@@ -38,7 +38,7 @@ $svgElement.onclick = () => anime2.play();
 console.log($('#svg_js_logo path')) 
 const [$squarePath, $jsPath, $ecmaPath, $sPath] = $('#svg_js_logo path');
 
-const anime3 = animate($squarePath,  //alvo da animação (elemento svg
+const animeQuad = animate($squarePath,  //alvo da animação (elemento svg
     {
         // fill:[							//propriedade a ser modificada (fill)
         // 	{to:'#ff0000', duration:333},
@@ -72,7 +72,7 @@ const animeE =  animate($ecmaPath,  //alvo da animação (elemento svg
                     ease: 'inQuad'	//função de tempo  (animation-timing-function)
                 });
 
-const anime4 = animate($jsPath,  //alvo da animação (elemento svg
+const animeJ = animate($jsPath,  //alvo da animação (elemento svg
     {
         translateX: '100px',
         loop: false,
@@ -86,14 +86,14 @@ const anime4 = animate($jsPath,  //alvo da animação (elemento svg
 const [$svgGroup] = $('#svg_js_logo')
 
 $svgGroup.onmouseenter = () => {
-    anime3.play();
-    anime4.play();
+    animeQuad.play();
+    animeJ.play();
 };
 
-$('#svg_js_logo')[0].onmouseleave = () => anime3.pause();
+$('#svg_js_logo')[0].onmouseleave = () => animeQuad.pause();
 
-anime3.onPause = () => {
-    const [path] = anime3.targets;
+animeQuad.onPause = () => {
+    const [path] = animeQuad.targets;
     path.setAttribute('fill', '#F7DF1E');
     animate($ecmaPath, {
         opacity: 0,
@@ -103,7 +103,7 @@ anime3.onPause = () => {
                     loop: false,
                     autoplay: true,
                     onComplete: () => {
-                            anime4.reset()
+                            animeJ.reset()
                             animeE.reset()
                     }
                 })
@@ -112,7 +112,7 @@ anime3.onPause = () => {
 }
 
 //Animação 4.3
-const anime5 = animate($("#btnOpen"),
+const animeBtnOpen = animate($("#btnOpen"),
     {
         opacity: 0,
         duration: 500,
@@ -120,7 +120,7 @@ const anime5 = animate($("#btnOpen"),
         ease: 'linear'
     });
 
-const anime6 = animate($("#btnClose"),
+const animeBtnX = animate($("#btnClose"),
     {
         opacity: 1,
         duration: 500,
@@ -129,13 +129,13 @@ const anime6 = animate($("#btnClose"),
     });
 
 $("#container-svg-3 svg")[0].onclick = () => {
-    if (anime5.targets[0].style.opacity == 1) {
-        anime5.play();
-        anime5.onBegin = () => anime6.play()
-        anime6.reset();
+    if (animeBtnOpen.targets[0].style.opacity == 1) {
+        animeBtnOpen.play();
+        animeBtnOpen.onBegin = () => animeBtnX.play()
+        animeBtnX.reset();
     } else {
-        anime6.reverse();
-        anime6.onBegin = () => anime5.targets[0].style.opacity = 1
-        anime5.reset();
+        animeBtnX.reverse();
+        animeBtnX.onBegin = () => animeBtnOpen.targets[0].style.opacity = 1
+        animeBtnOpen.reset();
     }
 }

@@ -32,9 +32,9 @@ const anime4 = animate($jsPath,  //alvo da animação (elemento svg
             { d: svg.morphTo($jsPath), duration: 200 },
             { d: svg.morphTo($ecmaPath), duration: 500 },
         ],
-        loop: true, 			//animação em loop (animation-count:infinite)
+        // loop: true, 			//animação em loop (animation-count:infinite)
         autoplay: false,
-        alternate: true,    //animation-direction: alternate
+        // alternate: true,    //animation-direction: alternate
         // ease: 'linear'	//função de tempo  (animation-timing-function)
         ease: 'inQuad'	//função de tempo  (animation-timing-function)
     });
@@ -44,7 +44,10 @@ $('#svg_js_logo')[0].onmouseenter = () => {
     anime4.play();
 }
 
-$('#svg_js_logo')[0].onmouseleave = () => anime3.pause();
+$('#svg_js_logo')[0].onmouseleave = () => {
+    anime3.pause();
+    anime4.reverse();
+}
 
 anime3.onPause = () => {
     const [path] = anime3.targets;

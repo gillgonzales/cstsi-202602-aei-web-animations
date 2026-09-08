@@ -139,6 +139,8 @@
   <script type="module">
     import { animate, utils } from 'https://cdn.jsdelivr.net/npm/animejs@4.0.0/+esm';
     const $ = utils.$;
+    // const $ = document.querySelectorAll
+
 
     const $sliderItens = $('.slider-item');
     const $btnPrev = $('.slider-prev')[0];
@@ -149,7 +151,7 @@
     const slideAnimationOptions = {
       opacity: [0, 1],
       display: ['none', 'block'],
-      filter: ['blur(100px)', 'blur(0px)'],
+      filter: ['blur(10px)', 'blur(0px)'],
       width: ['85%', '100%'],
       delay: 100,
       duration: 5000,
@@ -157,7 +159,7 @@
       //ease: 'linear',
       ease: "outElastic(1,.5)"
     }
-    let activeItemIndex = 4
+    let activeItemIndex = 0
 
     const showItem = (element) => {
       console.log($sliderItens)
