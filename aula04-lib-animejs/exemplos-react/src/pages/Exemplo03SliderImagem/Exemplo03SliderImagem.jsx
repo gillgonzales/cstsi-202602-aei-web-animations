@@ -81,6 +81,18 @@ const Exemplo03SliderImagem = ({ totalSlides }) => {
                                         ))
                                 }
                             </SliderList>
+                            <ul style={{display:'flex',textDecoration:'none'}}>
+                                {
+                                    Array.from({ length: totalSlides })//cria uma estrutura em array do tamanho do totalSlides
+                                        .map((_, indexSlide) => (
+                                            <li style={{
+                                                color: activeItemIndex===indexSlide?'coral':'gray', 
+                                                 listStyle:'none'
+                                                }}>o
+                                            </li>
+                                        ))
+                                }
+                            </ul>
                         </Slider>
                         <div className="slider-next">
                             <button
