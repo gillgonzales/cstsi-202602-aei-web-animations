@@ -24,9 +24,8 @@ const Exemplo03SliderImagem = ({ totalSlides }) => {
         ease: "outElastic(1,.3)",
     })
 
-    const nextSlide = () => {
-        if (activeItemIndex < totalSlides - 1)
-            setActiveItemIndex(activeItemIndex + 1)
+    const nextSlide = ()=>{
+        scope.current.methods.nextSlide()
     }
 
     const prevSlide = () => {
@@ -42,6 +41,11 @@ const Exemplo03SliderImagem = ({ totalSlides }) => {
                     utils.$(`li:nth-child(${activeItemIndex + 1}) img`),
                     slideAnimationOptions.current
                 )
+            })
+
+            scope.add('nextSlide', () => {
+                if (activeItemIndex < totalSlides - 1)
+                    setActiveItemIndex(activeItemIndex + 1)
             })
 
         })
