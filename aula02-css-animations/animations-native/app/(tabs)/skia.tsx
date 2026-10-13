@@ -10,6 +10,7 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useColorScheme } from '@/hooks/useColorScheme.web';
 
 import GoblinSprites from '@/components/animated/GoblinSprites/GoblinSprites';
+import GoblinSpritesReanimated from '@/components/animated/GoblinSpritesReanimated/GoblinSprites';
 import Animated from 'react-native-reanimated';
 
 type colorThemeIcons = { dark: string; light: string };
@@ -58,6 +59,11 @@ export default function TabTwoScreen() {
         <ThemedView style={{ flexDirection: 'column' }}>
           {Platform.OS === 'web' && <GoblinSprites image={require('@/assets/images/goblin_big.png')} />}
           {/* <GoblinSprites image={require('@/assets/images/goblin_big.png')} /> */}
+        </ThemedView>
+      </Collapsible>
+       <Collapsible title="Sprites com Reanimated">
+        <ThemedView style={{ flexDirection: 'column' }}>
+         <GoblinSpritesReanimated image={require('@/assets/images/goblin_big.png')} />
         </ThemedView>
       </Collapsible>
     </ParallaxScrollView>
