@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+
+@theme {
+
+
+    --color-blue: oklch(59.255% 0.19181 262.25);
+    --color-blue-50: oklch(94.136% 0.02494 263.33);
+    --color-blue-100: oklch(89.915% 0.04265 264.99);
+    --color-blue-200: oklch(81.989% 0.07861 264.69);
+    --color-blue-300: oklch(74.049% 0.11525 263.5);
+    --color-blue-400: oklch(66.441% 0.15372 263);
+    --color-blue-500: oklch(59.255% 0.19181 262.25);
+    --color-blue-600: oklch(50.545% 0.2158 262.27);
+    --color-blue-700: oklch(41.87% 0.17356 262.24);
+    --color-blue-800: oklch(32.813% 0.13004 262.13);
+    --color-blue-900: oklch(23.045% 0.08051 261.85);
+    --color-blue-950: oklch(17.728% 0.05356 259.15);
+
+
+
+    --color-primary-500: #92cc41;
+    --animate-flip: flip 2s ease-in-out 2s;
+
+    @keyframes flip {
+
+        0%,
+        100% {
+            transform: rotateY(0deg);
+        }
+
+        50% {
+            transform: rotateY(180deg);
+        }
+    }
+
+    --animate-scalereact: reactscale 5000ms ease 1;
+
+    @keyframes reactscale {
+        0% {
+            transform: scale(.1)
+        }
+
+        ,
+        100% {
+            transform: scale(1)
+        }
+    }
+}

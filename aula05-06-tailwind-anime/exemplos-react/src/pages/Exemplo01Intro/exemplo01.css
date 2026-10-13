@@ -1,0 +1,35 @@
+@import "../../styles/tailwind.css";
+
+@theme {
+  --color-myblue-500: #0b61ee;
+  
+  /*
+    https://www.shadecolr.com/#v=3&data=eyJjb2xvcnMiOlt7ImlkIjoiY29sb3ItMSIsImJhc2VDb2xvciI6WzIxNy4yNjg3MjI0NjY5NjAzNiw5MS4xNjQ2NTg2MzQ1MzgxNyw0OC44MjM1Mjk0MTE3NjQ3XSwiYmFzZVN0b3AiOjUsInN0ZXBVcCI6OCwic3RlcERvd24iOjExLCJodWVTaGlmdCI6MCwic2F0dXJhdGlvbkFkanVzdCI6MCwidGVtcGVyYXR1cmUiOjAsImNvbnRyYXN0Qm9vc3QiOjAsImxpZ2h0bmVzc0N1cnZlIjoxLCJvdmVycmlkZXMiOnt9LCJuYW1lIjoiYmx1ZSIsImN1c3RvbU5hbWUiOiIiLCJsb2NrZWQiOmZhbHNlfV0sInBhbGV0dGVOYW1lIjoiIn0%3D
+  */
+  --color-myblue: oklch(54.027% 0.22497 261.01);
+  --color-myblue-50: oklch(85.256% 0.06825 260.12);
+  --color-myblue-100: oklch(81.316% 0.08733 260.84);
+  --color-myblue-200: oklch(73.715% 0.12593 260.38);
+  --color-myblue-300: oklch(66.446% 0.16473 260.08);
+  --color-myblue-400: oklch(59.973% 0.20055 259.97);
+  --color-myblue-500: oklch(54.027% 0.22497 261.01);
+  --color-myblue-600: oklch(44.948% 0.183 260.88);
+  --color-myblue-700: oklch(35.47% 0.13993 260.64);
+  --color-myblue-800: oklch(25.248% 0.0914 260.07);
+  --color-myblue-900: oklch(14.256% 0.03626 251.14);
+  --color-myblue-950: oklch(0% 0 none);
+  
+  
+  --animate-pong: pong 5s ease-in infinite reverse;
+  
+  @keyframes pong {
+    0%,
+    100% {
+      transform: translate(-100px,-20px);
+    }
+    
+    50% {
+      transform: translate(100px,20px);
+    }
+  }
+}
