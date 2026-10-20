@@ -20,7 +20,7 @@
 
 
     --color-primary-500: #92cc41;
-    --animate-flip: flip 2s ease-in-out 2s;
+    --animate-flip: flip 2s ease-in-out 2s infinite;
 
     @keyframes flip {
 
