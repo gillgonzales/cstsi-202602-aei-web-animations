@@ -54,11 +54,17 @@ function rotate(){
 	cube.rotation.z += .01
 }
 
+function Input(){
+	document.addEventListener('keydown',(e)=>{
+		console.log(e.key);
+	})
+}
+
 
 
 const animate=()=>{
     renderer.render(scene, camera)
-	// Input()	
+	Input()	
 	rotate()
 	move()
 
