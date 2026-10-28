@@ -60,7 +60,7 @@ function handleObjectLoaded(object) {
   jet.rotation.y = .78
   // jet.rotateY(.78)
   jet.rotateX(.45)
-  jet.scale.setScalar(1)
+  jet.scale.setScalar(.5)
   scene.add(jet)
   animate()
 }
