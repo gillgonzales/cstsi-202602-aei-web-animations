@@ -1,4 +1,4 @@
-import { AmbientLight, LoadingManager, PerspectiveCamera, PointLight, PointLightHelper, Scene, TextureLoader, Timer, WebGLRenderer} from 'three'
+import { AmbientLight, LoadingManager, PerspectiveCamera, PointLight, PointLightHelper, Scene, TextureLoader, WebGLRenderer} from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 // import { FlyControls } from 'three/examples/jsm/controls/FlyControls';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
