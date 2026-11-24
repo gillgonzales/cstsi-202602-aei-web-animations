@@ -67,6 +67,21 @@ jet.position.y = -.3
 const jetJoystick = {x:null,y:null}
 scene.add(model)
 
+const hitRadius = .125;
+const sphere_geometry = new THREE.SphereGeometry(hitRadius / 2, 12, 12);
+// const sphere_geometry_enemy = new THREE.SphereGeometry(hitRadius * 8, 12, 12);
+
+const sphereColor = new THREE.MeshStandardMaterial({ color: 0xffff00 });
+// const sphereColorEnemy = new THREE.MeshStandardMaterial({ color: 0x0000ff });
+
+const sphere = new THREE.Mesh(sphere_geometry, sphereColor);
+// const sphereEnemy = new THREE.Mesh(sphere_geometry_enemy, sphereColorEnemy);
+
+const hitSphere = new THREE.Sphere(new THREE.Vector3(0, 0, 0), hitRadius)
+const hitSphereEnemy = new THREE.Sphere(new THREE.Vector3(0, 0, 0), hitRadius * 4)
+
+jet.shots = new Array()
+
 
 //enemy
 const enemyMtlFile = 'f15c_e.mtl'
@@ -114,12 +129,6 @@ console.log(sky)
 scene.add(sky)
 animate()
 
-window.addEventListener('click',evento=>{
-  console.log(evento.clientX)
-});
-
-
-window.addEventListener('mousemove',updateJoystick)
 
 function updateJoystick(event) {
   if (event.buttons) {
@@ -158,13 +167,55 @@ function moveJet() {
   }
 }
 
+function fire() {
+  const shot = {
+    rx: jet.rotation.z,
+    ry: jet.rotation.x,
+    model: sphere.clone(),
+    hit: hitSphere.clone(),
+  }
+  shot.hit.radius = hitRadius / 2
+  shot.model.material.transparent = true
+  shot.model.material.opacity = .5
+  shot.model.material.emissive = new THREE.Color(0xffff00)
+  shot.model.material.roughness = .5
+  shot.model.material.metalness = 1
+  shot.model.position.set(...jet.position)
+  shot.hit.center.copy(shot.model.position)
+  // console.log(shot)
+  scene.add(shot.model)
+  jet.shots.push(shot)
+  console.log(jet.shots.length)
+}
+
+function updateShots() {
+  if (jet.shots.length > 0) {
+    jet.shots.forEach((shot) => {
+      shot.model.position.z -= 1
+      shot.model.position.x += -shot.rx / 2
+      shot.model.position.y += shot.ry / 5
+      shot.hit.center.copy(shot.model.position)
+    })
+
+    jet.shots = jet.shots.filter((shot) => {
+      if (shot.model.position.z < -100) {
+        scene.remove(shot.model)
+        return false
+      }
+      return true
+    })
+  }
+}
+
+
 function animate() {
   //update inputs
   controls.update();
   moveJet()
-  enemies.forEach(e=>moveEnemy(e))
 
   //update states
+  enemies.forEach(e=>moveEnemy(e))
+  updateShots()
 
   //update renders
   renderer.render(scene, camera)
@@ -172,4 +223,14 @@ function animate() {
   requestAnimationFrame(animate)
 }
 
+window.addEventListener('click',evento=>{
+  console.log(evento.clientX)
+});
 
+
+window.addEventListener('mousemove',updateJoystick)
+window.addEventListener('keydown',(e)=>{
+  console.log(e.code)
+  if(e.code==='Space')
+    jet.shots.length < 10 && fire()
+})
