@@ -28,7 +28,7 @@ window.addEventListener('resize', () => {
 }, false);
 
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.maxDistance = 10
+controls.maxDistance = 1000
 
 var light = new THREE.AmbientLight(0xffffff, 30);
 scene.add(light);
@@ -70,17 +70,18 @@ const jetJoystick = {x:null,y:null}
 scene.add(model)
 
 const hitRadius = .125;
+const hitRadiusEnemy = hitRadius
 const sphere_geometry = new THREE.SphereGeometry(hitRadius / 2, 12, 12);
-const sphere_geometry_enemy = new THREE.SphereGeometry(hitRadius * 10, 12, 12);
+const sphere_geometry_enemy = new THREE.SphereGeometry(hitRadiusEnemy, 12, 12);
 
 const sphereColor = new THREE.MeshStandardMaterial({ color: 0xffff00 });
-const sphereColorEnemy = new THREE.MeshStandardMaterial({ color: 0x0000ff });
+const sphereColorEnemy = new THREE.MeshStandardMaterial({ color: 0xff0000 });
 
 const sphere = new THREE.Mesh(sphere_geometry, sphereColor);
 const sphereEnemy = new THREE.Mesh(sphere_geometry_enemy, sphereColorEnemy);
 
 const hitSphere = new THREE.Sphere(new THREE.Vector3(0, 0, 0), hitRadius)
-const hitSphereEnemy = new THREE.Sphere(new THREE.Vector3(0, 0, 0), hitRadius * 10)
+const hitSphereEnemy = new THREE.Sphere(new THREE.Vector3(0, 0, 0), hitRadiusEnemy)
 
 jet.shots = new Array()
 
@@ -114,10 +115,10 @@ enemies.forEach(enemy =>{
   enemy.position.x = randomX * (randomX > .5 ? limitEnemyXPosition : -limitEnemyXPosition);
   enemy.position.z = -(Math.random() * 10)
   enemy.hit = hitSphereEnemy.clone()
-  enemy.hit.center.copy(...enemy.position)
+  enemy.hit.center.copy(enemy.position)
   enemy.hitModel = sphereEnemy.clone()
   scene.add(enemy)
-  scene.add(enemy.hitModel)
+  // scene.add(enemy.hitModel)
 })
 
 function moveEnemy(enemy) {
@@ -126,8 +127,8 @@ function moveEnemy(enemy) {
     enemy.position.z = -(Math.random() * 500 + 100)
     enemy.position.x = Math.random() * (Math.random() > .5 ? limitEnemyXPosition : -limitEnemyXPosition);
   }
-  enemy.hit.center.copy(...enemy.position)
-  enemy.hitModel.position.copy(...enemy.position)
+  enemy.hitModel.position.set(...enemy.position)
+  enemy.hit.center.copy(enemy.hitModel.position)
 }
 
 let sky = await createSkyBox('bluesky',500)
@@ -189,11 +190,11 @@ function fire() {
   shot.model.material.roughness = .5
   shot.model.material.metalness = 1
   shot.model.position.set(...jet.position)
-  shot.hit.center.copy(shot.model.position)
+  shot.hit.center.copy(shot.model.position) //fix
   // console.log(shot)
   scene.add(shot.model)
   jet.shots.push(shot)
-  console.log(jet.shots.length)
+  // console.log(jet.shots.length)
 }
 
 function updateShots() {
@@ -217,7 +218,7 @@ function updateShots() {
 
 function shootDown(enemy) {
   if (jet.shots.length == 0) return false;
-  return jet.shots.find(shot => shot.hit.intersectsSphere(enemy.hit))
+  return jet.shots.find(shot =>shot.hit.intersectsSphere(enemy.hit))
 }
 
 
@@ -232,6 +233,7 @@ function animate() {
     if(shootDown(e)){
       console.warn('COLIDIU!!!')
       console.log(e.hit)
+      e.position.z = -100;
     }
   })
    !PAUSED && updateShots()
@@ -249,7 +251,6 @@ window.addEventListener('click',evento=>{
 
 window.addEventListener('mousemove',updateJoystick)
 window.addEventListener('keydown',(e)=>{
-  console.log(e.code)
   if(e.code==='Space')
     jet.shots.length < 100 && fire()
 
