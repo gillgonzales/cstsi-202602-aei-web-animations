@@ -3,7 +3,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 import { createSkyBox } from './skybox';
-import { mod } from 'three/src/nodes/math/OperatorNode.js';
 
 const renderer = new THREE.WebGLRenderer({ antialias: true })
 renderer.setSize(window.innerWidth, window.innerHeight)
@@ -44,6 +43,7 @@ const modelPath = 'models/f15c/'
 const mtlFile = 'f15c.mtl'
 const objFile = 'f15c.obj'
 
+
 const manager = new THREE.LoadingManager();
 manager.onProgress = (item, loaded, total) => {
   console.log(item, loaded, total);
@@ -67,7 +67,47 @@ jet.position.y = -.3
 const jetJoystick = {x:null,y:null}
 scene.add(model)
 
-let sky = await createSkyBox('bluesky',400)
+
+//enemy
+const enemyMtlFile = 'f15c_e.mtl'
+const enemyMtlLoader = new MTLLoader(manager);
+const enemyObjLoader = new OBJLoader();
+
+//carregamento assincrono com promises
+enemyMtlLoader.setPath(modelPath)
+enemyObjLoader.setPath(modelPath)
+
+enemyObjLoader.setMaterials(await enemyMtlLoader.loadAsync(enemyMtlFile))
+const enemy = await enemyObjLoader.loadAsync(objFile)
+enemy.scale.setScalar(.5)//redimensiona o objeto
+
+const limitEnemyXPosition = 5
+enemy.position.y = .4
+
+const randomX = Math.random()
+enemy.position.x = randomX * (randomX > .5 ? limitEnemyXPosition : -limitEnemyXPosition);
+enemy.position.z = -(Math.random() * 100 + 10)
+
+enemy.rotateY(3.14)
+
+const enemiesQtd = 10
+const enemies = Array.from({ length: enemiesQtd }).map(()=>enemy.clone())
+enemies.forEach(enemy =>{
+  let randomX = Math.random()
+  enemy.position.x = randomX * (randomX > .5 ? limitEnemyXPosition : -limitEnemyXPosition);
+  enemy.position.z = -(Math.random() * 10)
+  scene.add(enemy)
+})
+
+function moveEnemy(enemy) {
+  enemy.position.z += 0.5
+  if (enemy.position.z > 100) {
+    enemy.position.z = -(Math.random() * 500 + 100)
+    enemy.position.x = Math.random() * (Math.random() > .5 ? limitEnemyXPosition : -limitEnemyXPosition);
+  }
+}
+
+let sky = await createSkyBox('bluesky',500)
 sky.position.y = 1
 console.log('sky created')
 console.log(sky)
@@ -87,7 +127,7 @@ function updateJoystick(event) {
     jetJoystick.y = null
     return
   }
-  
+
    jetJoystick.x = event.clientX
    jetJoystick.y = event.clientY
 }
@@ -122,6 +162,7 @@ function animate() {
   //update inputs
   controls.update();
   moveJet()
+  enemies.forEach(e=>moveEnemy(e))
 
   //update states
 
