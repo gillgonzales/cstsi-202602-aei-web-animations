@@ -4,6 +4,8 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 import { createSkyBox } from './skybox';
 
+let PAUSED = false
+
 const renderer = new THREE.WebGLRenderer({ antialias: true })
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
@@ -69,16 +71,16 @@ scene.add(model)
 
 const hitRadius = .125;
 const sphere_geometry = new THREE.SphereGeometry(hitRadius / 2, 12, 12);
-// const sphere_geometry_enemy = new THREE.SphereGeometry(hitRadius * 8, 12, 12);
+const sphere_geometry_enemy = new THREE.SphereGeometry(hitRadius * 10, 12, 12);
 
 const sphereColor = new THREE.MeshStandardMaterial({ color: 0xffff00 });
-// const sphereColorEnemy = new THREE.MeshStandardMaterial({ color: 0x0000ff });
+const sphereColorEnemy = new THREE.MeshStandardMaterial({ color: 0x0000ff });
 
 const sphere = new THREE.Mesh(sphere_geometry, sphereColor);
-// const sphereEnemy = new THREE.Mesh(sphere_geometry_enemy, sphereColorEnemy);
+const sphereEnemy = new THREE.Mesh(sphere_geometry_enemy, sphereColorEnemy);
 
 const hitSphere = new THREE.Sphere(new THREE.Vector3(0, 0, 0), hitRadius)
-const hitSphereEnemy = new THREE.Sphere(new THREE.Vector3(0, 0, 0), hitRadius * 4)
+const hitSphereEnemy = new THREE.Sphere(new THREE.Vector3(0, 0, 0), hitRadius * 10)
 
 jet.shots = new Array()
 
@@ -111,7 +113,11 @@ enemies.forEach(enemy =>{
   let randomX = Math.random()
   enemy.position.x = randomX * (randomX > .5 ? limitEnemyXPosition : -limitEnemyXPosition);
   enemy.position.z = -(Math.random() * 10)
+  enemy.hit = hitSphereEnemy.clone()
+  enemy.hit.center.copy(...enemy.position)
+  enemy.hitModel = sphereEnemy.clone()
   scene.add(enemy)
+  scene.add(enemy.hitModel)
 })
 
 function moveEnemy(enemy) {
@@ -120,6 +126,8 @@ function moveEnemy(enemy) {
     enemy.position.z = -(Math.random() * 500 + 100)
     enemy.position.x = Math.random() * (Math.random() > .5 ? limitEnemyXPosition : -limitEnemyXPosition);
   }
+  enemy.hit.center.copy(...enemy.position)
+  enemy.hitModel.position.copy(...enemy.position)
 }
 
 let sky = await createSkyBox('bluesky',500)
@@ -207,15 +215,26 @@ function updateShots() {
   }
 }
 
+function shootDown(enemy) {
+  if (jet.shots.length == 0) return false;
+  return jet.shots.find(shot => shot.hit.intersectsSphere(enemy.hit))
+}
+
 
 function animate() {
   //update inputs
   controls.update();
-  moveJet()
+  !PAUSED && moveJet()
 
   //update states
-  enemies.forEach(e=>moveEnemy(e))
-  updateShots()
+  enemies.forEach(e=>{
+    !PAUSED && moveEnemy(e)
+    if(shootDown(e)){
+      console.warn('COLIDIU!!!')
+      console.log(e.hit)
+    }
+  })
+   !PAUSED && updateShots()
 
   //update renders
   renderer.render(scene, camera)
@@ -232,5 +251,9 @@ window.addEventListener('mousemove',updateJoystick)
 window.addEventListener('keydown',(e)=>{
   console.log(e.code)
   if(e.code==='Space')
-    jet.shots.length < 10 && fire()
+    jet.shots.length < 100 && fire()
+
+  if(e.code == "KeyP")
+    PAUSED = !PAUSED;
 })
+
